@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/boksitef96/web-scraper#readme",
   "dependencies": {
-    "chrome-cookies-secure": "^1.3.3",
-    "http": "0.0.1-security",
+    "app-root-path": "^3.0.0",
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
     "nodemon": "^2.0.15",
-    "puppeteer": "^13.0.0"
+    "puppeteer": "^13.0.0",
+    "winston": "^3.3.3"
   }
 }

@@ -1,21 +1,26 @@
-const http = require('http');
-const webScrapper = require('./web-scrapper.js');
+const webScrapper = require('./web-scraper.js');
+const logger = require('./logger.js');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const hostname = 'localhost';
-const port = 8000;
-const server =  http.createServer(async (req, res) => {
-    res.statusCode = 200;
-    console.log(req.url);
-    let data = 'done';
-    if (req.url === '/test') {
-         data = await webScrapper.getPageData();
-        console.log(data);
+const app = express();
+
+app.use(bodyParser.json());
+
+app.get('/data', async (req, res) => {
+    let data = 'Done!';
+
+    try {
+        data = await webScrapper.getPageData(req.body);
+        logger.info(data);
+    } catch (error) {
+        logger.error("ERROR:");
+        logger.error(error.message);
+        res.end("Error");
     }
-
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(data));
 });
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+const PORT = process.env.PORT || 8000;
+app.listen(PORT);
