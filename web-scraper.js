@@ -34,7 +34,7 @@ async function getPageData({fullAuthentication, pno}) {
     //
     // const page = await browser.newPage();
 
-    // const dir = __dirname + '/node_modules/playwright/node_modules/playwright-core/.local-browsers';
+    const dir = process.env.LAST_PATH;
     // const dir = '/Users/bokistef/Documents/Projects/web-scraper/web-scraper/node_modules/playwright/node_modules/playwright-core/.local-browsers/chromium-939194/chrome-mac/Chromium.app';
     // console.log(dir);
     const options = {
@@ -43,7 +43,7 @@ async function getPageData({fullAuthentication, pno}) {
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
-        // executablePath: dir
+        executablePath: dir
     };
 
     const browser = await chromium.launch(options);
