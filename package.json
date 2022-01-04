@@ -21,8 +21,8 @@
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
-    "playwright": "^1.17.1",
     "puppeteer": "^13.0.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "playwright": "^1.17.1"
   }
 }

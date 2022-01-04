@@ -21,6 +21,7 @@ async function getBrowser() {
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
+        executablePath: '~/.cache/ms-playwright/chromium-939194/chrome-linux/chrome'
     };
 
     return await puppeteer.launch(options)
@@ -38,6 +39,7 @@ async function getPageData({fullAuthentication, pno}) {
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
+        executablePath: '~/.cache/ms-playwright/chromium-939194/chrome-linux/chrome'
     };
 
     const browser = await chromium.launch(options);
