@@ -16,9 +16,9 @@ async function getBrowser() {
     // }
 
     const options = {
-        headless: false,
-        // headless: true,
-        // defaultViewport: null,
+        // headless: false,
+        headless: true,
+        defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
     };
