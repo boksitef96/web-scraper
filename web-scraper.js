@@ -34,7 +34,7 @@ async function getPageData({fullAuthentication, pno}) {
     //
     // const page = await browser.newPage();
 
-    const dir = process.env.LAST_PATH;
+    const dir = '/var/www/web-scraper/pw-browsers';
     // const dir = '/Users/bokistef/Documents/Projects/web-scraper/web-scraper/node_modules/playwright/node_modules/playwright-core/.local-browsers/chromium-939194/chrome-mac/Chromium.app';
     console.log(dir);
     const options = {
