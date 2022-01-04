@@ -19,11 +19,10 @@ async function getBrowser() {
         // headless: false,
         headless: true,
         defaultViewport: null,
-        ignoreDefaultArgs: ['--disable-extensions'],
-        args: ['--no-sandbox'],
-        // executablePath: '~/.cache/ms-playwright/chromium-939194/chrome-linux/chrome'
-        executablePath: __dirname.replace('app.asar', 'node_modules/puppeteer/.local-chromium/win64-818858/chrome-win/chrome.exe'),
-
+        // ignoreDefaultArgs: ['--disable-extensions'],
+        // args: ['--no-sandbox'],
+        // executablePath: __dirname + '/pw-browsers/'
+        // executablePath: __dirname.replace('app.asar', 'node_modules/puppeteer/.local-chromium/win64-818858/chrome-win/chrome.exe'),
     };
 
     return await puppeteer.launch(options)
@@ -35,16 +34,20 @@ async function getPageData({fullAuthentication, pno}) {
     //
     // const page = await browser.newPage();
 
+    // const dir = __dirname + '/node_modules/playwright/node_modules/playwright-core/.local-browsers';
+    // const dir = '/Users/bokistef/Documents/Projects/web-scraper/web-scraper/node_modules/playwright/node_modules/playwright-core/.local-browsers/chromium-939194/chrome-mac/Chromium.app';
+    // console.log(dir);
     const options = {
         // headless: false,
         headless: true,
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
-        executablePath: '~/.cache/ms-playwright/chromium-939194/chrome-linux/chrome'
+        // executablePath: dir
     };
 
     const browser = await chromium.launch(options);
+    console.log(browser);
     // const page = await browser.newPage();
     const context = await browser.newContext()
     const page = await context.newPage()
