@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const logger = require('./logger.js');
-const { chromium } = require('playwright');
+const {chromium} = require('playwright');
 
 async function getBrowser() {
     // let options = {}
@@ -21,7 +21,9 @@ async function getBrowser() {
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
-        executablePath: '~/.cache/ms-playwright/chromium-939194/chrome-linux/chrome'
+        // executablePath: '~/.cache/ms-playwright/chromium-939194/chrome-linux/chrome'
+        executablePath: __dirname.replace('app.asar', 'node_modules/puppeteer/.local-chromium/win64-818858/chrome-win/chrome.exe'),
+
     };
 
     return await puppeteer.launch(options)
