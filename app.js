@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/data', async (req, res) => {
+app.post('/data', async (req, res) => {
     let data = 'Done!';
 
     try {

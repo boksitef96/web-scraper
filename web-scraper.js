@@ -1,69 +1,108 @@
 const puppeteer = require('puppeteer');
 const logger = require('./logger.js');
+const { webkit, chromium } = require('playwright');
 
 async function getBrowser() {
-    let options = {}
+    // let options = {}
 
-    if (process.env.NODE_ENV === "production") {
-        options = {
-            ignoreDefaultArgs: ['--disable-extensions'],
-            // executablePath: '/usr/bin/chromium-browser',
-            // executablePath: __dirname.replace('app.asar', 'node_modules/puppeteer/.local-chromium/win64-818858/chrome-win/chrome.exe'),
-            // args: ['--no-sandbox' ,'--disable-setuid-sandbox',  '--use-gl=egl'],
-            args: ['--no-sandbox']
-        }
-    }
+    // if (process.env.NODE_ENV === "production") {
+    //     options = {
+    //         ignoreDefaultArgs: ['--disable-extensions'],
+    //         // executablePath: '/usr/bin/chromium-browser',
+    //         // executablePath: __dirname.replace('app.asar', 'node_modules/puppeteer/.local-chromium/win64-818858/chrome-win/chrome.exe'),
+    //         // args: ['--no-sandbox' ,'--disable-setuid-sandbox',  '--use-gl=egl'],
+    //         args: ['--no-sandbox']
+    //     }
+    // }
 
-    return await puppeteer.launch({headless: true, defaultViewport: null, ...options})
+    const options = {
+        headless: false,
+        // headless: true,
+        // defaultViewport: null,
+        ignoreDefaultArgs: ['--disable-extensions'],
+        args: ['--no-sandbox'],
+    };
+
+    return await puppeteer.launch(options)
 }
 
 async function getPageData({fullAuthentication, pno}) {
     logger.info("Web scrapper START");
-    const browser = await getBrowser();
+    // const browser = await getBrowser();
+    //
+    // const page = await browser.newPage();
 
-    const page = await browser.newPage();
+    const browser = await chromium.launch();
+    // const page = await browser.newPage();
+    const context = await browser.newContext()
+    const page = await context.newPage()
+
+    // // FACEBOOK
+    // await page.goto('https://facebook.com/');
+    // await typeElement(page, '#email', 'bokistef96@gmail.com');
+    // await typeElement(page, '#pass', 'wearecodeus');
+    // await clickElement(page, 'button[type="submit"]')
+    // await page.waitForTimeout(10000);
 
     // EUPRAVA
-    // await page.goto('https://euprava.gov.rs/');
-    // await page.waitFor(50);
-    // await page.click('.my-egov');
-    // await page.waitFor(50);
-    // await page.click('.my-egov li');
-    // await page.waitFor(50);
-    // await page.click('.icon-mobile');
-    // await page.waitFor(50);
-    // await page.type('#usernameCid', 'bokistef96@gmail.com');
-    // await page.click('#aetButtonCID');
+    await page.goto('https://euprava.gov.rs/');
 
-    // await page.waitForNavigation();
+    await page.waitForTimeout(200);
+    await clickElement(page, '.my-egov');
+    await clickElement(page, '.my-egov li');
+    await clickElement(page, '.icon-mobile');
+    await typeElement(page, '#usernameCid', 'bokistef96@gmail.com');
+    await clickElement(page, '#aetButtonCID');
 
-    // const cookies = await page.cookies();
-    // console.log(cookies);
+    await page.waitForNavigation({timeout: 20000});
+    await page.waitForTimeout(3000);
 
-    // // Skatteverket
-    await page.goto('https://skatteverket.se/');
-    await page.waitFor(300);
-    await page.click('.sso__desktopSection-button-label');
-    await page.waitFor(300);
-    await page.click('.indexlist:nth-child(2)');
-    await page.waitFor(300);
-    await page.type('#ssn', pno);
-    await page.waitFor(300);
-    await page.click(".form-group input[type=submit]");
+    // Skatteverket
+    // await page.goto('https://sso.skatteverket.se/ms/ms_web/etjanst.do?etjanstId=etjanst.flyttanmalan');
 
-    if (fullAuthentication) {
-        await page.waitForNavigation({timeout: 20000});
-    }
+    // await clickElement(page, '.sso__desktopSection-button-label');
+    // await clickElement(page, '.indexlist:nth-child(2)');
+    // await typeElement(page, '#ssn', pno);
+    //
+    // await clickElement(page, '.form-group input[type=submit]');
+    //
+    // if (fullAuthentication) {
+    //     await page.waitForSelector("#home-top-section", {
+    //         timeout: 5000,
+    //     });
+    //     // await page.waitForNavigation({timeout: 20000});
+    //     await page.waitForTimeout(3000);
+    // }
 
-    const cookies = await page.cookies();
+    await page.waitForTimeout(5000);
 
+    const cookies = await context.cookies();
+    const data = cookies.map(item => item.name);
+    console.log(data);
     browser.close();
 
     logger.info("Web scrapper DONE BROWSER");
 
     // const data = cookies.filter(item => item.name === 'logicaidpSID');
     // return data[0] ?? {};
-    return cookies;
+    return data;
+}
+
+
+async function clickElement(page, selector) {
+    await page.waitForTimeout(500);
+    await page.waitForSelector(selector, {
+        timeout: 2000,
+    });
+    await page.click(selector);
+}
+
+async function typeElement(page, selector, text) {
+    await page.waitForTimeout(500);
+    await page.waitForSelector(selector, {
+        timeout: 2000,
+    });
+    await page.type(selector, text);
 }
 
 module.exports = {
