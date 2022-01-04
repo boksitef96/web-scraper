@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const logger = require('./logger.js');
-const { webkit, chromium } = require('playwright');
+const { chromium } = require('playwright');
 
 async function getBrowser() {
     // let options = {}
@@ -32,7 +32,15 @@ async function getPageData({fullAuthentication, pno}) {
     //
     // const page = await browser.newPage();
 
-    const browser = await chromium.launch();
+    const options = {
+        headless: false,
+        // headless: true,
+        // defaultViewport: null,
+        ignoreDefaultArgs: ['--disable-extensions'],
+        args: ['--no-sandbox'],
+    };
+
+    const browser = await chromium.launch(options);
     // const page = await browser.newPage();
     const context = await browser.newContext()
     const page = await context.newPage()
