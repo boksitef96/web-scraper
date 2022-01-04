@@ -43,7 +43,7 @@ async function getPageData({fullAuthentication, pno}) {
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: ['--no-sandbox'],
-        executablePath: dir
+        // executablePath: dir
     };
 
     const browser = await chromium.launch(options);
