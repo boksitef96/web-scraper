@@ -28,22 +28,22 @@ async function getBrowser() {
 
 async function getPageData({fullAuthentication, pno}) {
     logger.info("Web scrapper START");
-    const browser = await getBrowser();
-
-    const page = await browser.newPage();
-
-    // const options = {
-    //     headless: false,
-    //     // headless: true,
-    //     // defaultViewport: null,
-    //     ignoreDefaultArgs: ['--disable-extensions'],
-    //     args: ['--no-sandbox'],
-    // };
+    // const browser = await getBrowser();
     //
-    // const browser = await chromium.launch(options);
-    // // const page = await browser.newPage();
-    // const context = await browser.newContext()
-    // const page = await context.newPage()
+    // const page = await browser.newPage();
+
+    const options = {
+        // headless: false,
+        headless: true,
+        defaultViewport: null,
+        ignoreDefaultArgs: ['--disable-extensions'],
+        args: ['--no-sandbox'],
+    };
+
+    const browser = await chromium.launch(options);
+    // const page = await browser.newPage();
+    const context = await browser.newContext()
+    const page = await context.newPage()
 
     // // FACEBOOK
     // await page.goto('https://facebook.com/');
