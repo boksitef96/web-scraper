@@ -36,7 +36,7 @@ async function getPageData({fullAuthentication, pno}) {
         // headless: true,
         // defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
-        args: ['--no-sandbox'],
+        // args: ['--no-sandbox'],
         // executablePath: dir
     };
 
@@ -53,7 +53,7 @@ async function getPageData({fullAuthentication, pno}) {
     // await clickElement(page, 'button[type="submit"]')
     // await page.waitForTimeout(10000);
 
-    EUPRAVA
+    // EUPRAVA
     await page.goto('https://euprava.gov.rs/');
 
     await page.waitForTimeout(200);
