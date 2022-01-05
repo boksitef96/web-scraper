@@ -34,9 +34,9 @@ async function getPageData({fullAuthentication, pno}) {
     const options = {
         headless: false,
         // headless: true,
-        // defaultViewport: null,
+        defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
-        // args: ['--no-sandbox'],
+        args: ['--no-sandbox'],
         // executablePath: dir
     };
 
