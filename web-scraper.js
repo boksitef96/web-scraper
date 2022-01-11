@@ -64,34 +64,34 @@ async function getPageData({fullAuthentication, pno}) {
     // await page.waitForTimeout(10000);
 
     // EUPRAVA
-    // await page.goto('https://euprava.gov.rs/');
-    //
-    // await page.waitForTimeout(200);
-    // await clickElement(page, '.my-egov');
-    // await clickElement(page, '.my-egov li');
-    // await clickElement(page, '.icon-mobile');
-    // await typeElement(page, '#usernameCid', 'bokistef96@gmail.com');
-    // await clickElement(page, '#aetButtonCID');
-    //
-    // await page.waitForNavigation({timeout: 20000});
-    // await page.waitForTimeout(3000);
+    await page.goto('https://euprava.gov.rs/');
 
-    // Skatteverket
-    await page.goto('https://skatteverket.se');
+    await page.waitForTimeout(200);
+    await clickElement(page, '.my-egov');
+    await clickElement(page, '.my-egov li');
+    await clickElement(page, '.icon-mobile');
+    await typeElement(page, '#usernameCid', 'bokistef96@gmail.com');
+    await clickElement(page, '#aetButtonCID');
 
-    await clickElement(page, '.sso__desktopSection-button-label');
-    await clickElement(page, '.indexlist:nth-child(2)');
-    await typeElement(page, '#ssn', pno);
-    await clickElement(page, '.form-group input[type=submit]');
-
-    await page.waitForNavigation({timeout: 120000});
-
+    await page.waitForNavigation({timeout: 20000});
     await page.waitForTimeout(3000);
 
-    if (fullAuthentication) {
-        await clickElement(page, '.button--link__hero');
-        await clickElement(page, 'a[data-testid="privat.flyttanmalan"]');
-    }
+    // // Skatteverket
+    // await page.goto('https://skatteverket.se');
+    //
+    // await clickElement(page, '.sso__desktopSection-button-label');
+    // await clickElement(page, '.indexlist:nth-child(2)');
+    // await typeElement(page, '#ssn', pno);
+    // await clickElement(page, '.form-group input[type=submit]');
+    //
+    // await page.waitForNavigation({timeout: 120000});
+    //
+    // await page.waitForTimeout(3000);
+    //
+    // if (fullAuthentication) {
+    //     await clickElement(page, '.button--link__hero');
+    //     await clickElement(page, 'a[data-testid="privat.flyttanmalan"]');
+    // }
 
     await page.waitForTimeout(5000);
 
