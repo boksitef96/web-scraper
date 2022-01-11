@@ -32,7 +32,7 @@ async function getPageData({fullAuthentication, pno}) {
     logger.info("Web scrapper START");
 
     const options = {
-        headless: true,
+        headless: false,
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
         args: [
@@ -111,7 +111,7 @@ async function getPageData({fullAuthentication, pno}) {
 async function clickElement(page, selector) {
     await page.waitForTimeout(500);
     await page.waitForSelector(selector, {
-        timeout: 4000,
+        timeout: 10000,
     });
     await page.click(selector);
 }
@@ -119,7 +119,7 @@ async function clickElement(page, selector) {
 async function typeElement(page, selector, text) {
     await page.waitForTimeout(500);
     await page.waitForSelector(selector, {
-        timeout: 4000,
+        timeout: 10000,
     });
     await page.type(selector, text);
 }
