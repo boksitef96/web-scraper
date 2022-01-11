@@ -11,7 +11,9 @@ app.post('/data', async (req, res) => {
     let data = 'Done!';
 
     try {
-        data = await webScrapper.getPageData(req.body);
+        // data = await webScrapper.getPageData(req.body);
+        data = await webScrapper.screenshot('https://google.com');
+
         logger.info(data);
     } catch (error) {
         logger.error("ERROR:");

@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const logger = require('./logger.js');
 const {chromium} = require('playwright');
+const fs = require('fs');
 
 async function getBrowser() {
     // let options = {}
@@ -27,6 +28,7 @@ async function getBrowser() {
 
     return await puppeteer.launch(options)
 }
+
 
 async function getPageData({fullAuthentication, pno}) {
     logger.info("Web scrapper START");
@@ -124,6 +126,40 @@ async function typeElement(page, selector, text) {
     await page.type(selector, text);
 }
 
+async function screenshot(url) {
+    const browser = await puppeteer.launch({
+        headless: false,
+        args: [
+            '--headless',
+            '--hide-scrollbars',
+            '--mute-audio'
+        ]
+    });
+
+    // const browser = await puppeteer.launch({
+    //     headless: false,
+    //     args: [
+    //         "--no-sandbox",
+    //         "--disable-gpu",
+    //     ]
+    // });
+    //
+    const page = await browser.newPage();
+    await page.goto(url, {
+        timeout: 0,
+        waitUntil: 'networkidle0',
+    });
+    const screenData = await page.screenshot({encoding: 'binary', type: 'jpeg', quality: 30});
+    fs.writeFileSync('screenshot.jpg', screenData);
+    const cookies = await page.cookies();;
+
+    await page.close();
+    await browser.close();
+
+    return cookies;
+}
+
+
 module.exports = {
-    getPageData
+    getPageData, screenshot
 }
