@@ -32,12 +32,22 @@ async function getPageData({fullAuthentication, pno}) {
     logger.info("Web scrapper START");
 
     const options = {
-        headless: false,
-        // headless: true,
+        headless: true,
         defaultViewport: null,
         ignoreDefaultArgs: ['--disable-extensions'],
-        args: ['--no-sandbox'],
-        // executablePath: dir
+        args: [
+            '--no-sandbox',
+            // '--disable-setuid-sandbox',
+            // '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"',
+            // '--disable-background-timer-throttling',
+            // '--disable-backgrounding-occluded-windows',
+            // '--disable-renderer-backgrounding',
+            '--disable-web-security',
+            // '--disable-features=IsolateOrigins',
+            // '--disable-site-isolation-trials',
+            // '--lang=bn-BD,bn',
+        ],
+        setJavaScriptEnabled: true,
     };
 
     const browser = await chromium.launch(options);
@@ -54,34 +64,34 @@ async function getPageData({fullAuthentication, pno}) {
     // await page.waitForTimeout(10000);
 
     // EUPRAVA
-    await page.goto('https://euprava.gov.rs/');
-
-    await page.waitForTimeout(200);
-    await clickElement(page, '.my-egov');
-    await clickElement(page, '.my-egov li');
-    await clickElement(page, '.icon-mobile');
-    await typeElement(page, '#usernameCid', 'bokistef96@gmail.com');
-    await clickElement(page, '#aetButtonCID');
-
-    await page.waitForNavigation({timeout: 20000});
-    await page.waitForTimeout(3000);
+    // await page.goto('https://euprava.gov.rs/');
+    //
+    // await page.waitForTimeout(200);
+    // await clickElement(page, '.my-egov');
+    // await clickElement(page, '.my-egov li');
+    // await clickElement(page, '.icon-mobile');
+    // await typeElement(page, '#usernameCid', 'bokistef96@gmail.com');
+    // await clickElement(page, '#aetButtonCID');
+    //
+    // await page.waitForNavigation({timeout: 20000});
+    // await page.waitForTimeout(3000);
 
     // Skatteverket
-    // await page.goto('https://skatteverket.se');
-    //
-    // await clickElement(page, '.sso__desktopSection-button-label');
-    // await clickElement(page, '.indexlist:nth-child(2)');
-    // await typeElement(page, '#ssn', pno);
-    //
-    // await clickElement(page, '.form-group input[type=submit]');
+    await page.goto('https://skatteverket.se');
 
-    // if (fullAuthentication) {
-    //     await page.waitForSelector("#home-top-section", {
-    //         timeout: 5000,
-    //     });
-    //     // await page.waitForNavigation({timeout: 20000});
-    //     await page.waitForTimeout(3000);
-    // }
+    await clickElement(page, '.sso__desktopSection-button-label');
+    await clickElement(page, '.indexlist:nth-child(2)');
+    await typeElement(page, '#ssn', pno);
+    await clickElement(page, '.form-group input[type=submit]');
+
+    await page.waitForNavigation({timeout: 120000});
+
+    await page.waitForTimeout(3000);
+
+    if (fullAuthentication) {
+        await clickElement(page, '.button--link__hero');
+        await clickElement(page, 'a[data-testid="privat.flyttanmalan"]');
+    }
 
     await page.waitForTimeout(5000);
 
