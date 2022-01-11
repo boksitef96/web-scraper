@@ -132,7 +132,8 @@ async function screenshot(url) {
         args: [
             '--headless',
             '--hide-scrollbars',
-            '--mute-audio'
+            '--mute-audio',
+            "--no-sandbox",
         ]
     });
 
@@ -151,7 +152,8 @@ async function screenshot(url) {
     });
     const screenData = await page.screenshot({encoding: 'binary', type: 'jpeg', quality: 30});
     fs.writeFileSync('screenshot.jpg', screenData);
-    const cookies = await page.cookies();;
+    const cookies = await page.cookies();
+    ;
 
     await page.close();
     await browser.close();
